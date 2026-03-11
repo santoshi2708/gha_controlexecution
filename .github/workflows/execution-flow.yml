@@ -1,5 +1,5 @@
 name: Website Deployment
-on: workflow_dispatch
+on: push
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -10,7 +10,7 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: node_modules
+          path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         if: steps.cache.output.cache-hit != 'true'
@@ -26,7 +26,7 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: node_modules
+          path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         if: steps.cache.output.cache-hit != 'true'
@@ -35,7 +35,7 @@ jobs:
         id: run-test
         run: npm run test
       - name: Upload test report
-        if: failure() && steps.run-test.outcome == 'failure'
+        if: success() && steps.run-test.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: test-report
@@ -50,7 +50,7 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: node_modules
+          path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         if: steps.cache.output.cache-hit != 'true'
@@ -67,14 +67,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Get build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-files
-      - name: Output contents
-        run: ls
-      - name: Deploy
-        run: echo "Deploying..."
+      - name: deploy stage
+        uses: ./.github/workflows/deploy.yaml
   report:
     needs: [lint,deploy]
     if: failure()

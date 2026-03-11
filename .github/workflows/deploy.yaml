@@ -1,0 +1,8 @@
+name: deploy file
+on: workflow_call
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy stage
+        run: echo "using deploy file in execution workflow ....."
