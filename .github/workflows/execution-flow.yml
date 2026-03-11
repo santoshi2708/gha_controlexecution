@@ -81,4 +81,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      -name: report information
-      run: echo "${{ toJSON(github) }}"
+      run: echo "something went wrong"
