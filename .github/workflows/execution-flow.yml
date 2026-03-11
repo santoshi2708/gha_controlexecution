@@ -80,5 +80,5 @@ jobs:
     if: failure()
     runs-on: ubuntu-latest
     steps:
-     -name: report information
-      run: echo "something went wrong"
+      - name: Deploy
+        run: echo "something went wrong"
