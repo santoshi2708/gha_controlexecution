@@ -63,10 +63,7 @@ jobs:
           path: dist
   deploy:
     needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: deploy stage
-        uses: ./.github/workflows/deploy.yaml
+    uses: ./.github/workflows/deploy.yaml
   report:
     needs: [lint,deploy]
     if: failure()
