@@ -4,9 +4,9 @@ on:
     inputs:
       artifact-name:
         description: this is the artifact that produced by build job taken as input
-          required: false
-          default: dist
-          type: string
+        required: false
+        default: dist
+        type: string
 jobs:
   deploy:
     runs-on: ubuntu-latest
