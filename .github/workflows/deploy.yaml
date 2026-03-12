@@ -4,7 +4,7 @@ on:
     inputs:
       artifact-name:
         description: this is the artifact that produced by build job taken as input
-          required: true
+          required: false
           default: dist
           type: string
 jobs:
