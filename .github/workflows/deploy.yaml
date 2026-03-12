@@ -1,8 +1,21 @@
 name: deploy file
-on: workflow_call
+on: 
+  workflow_call:
+    inputs:
+      artifact-name:
+        description: this is the artifact that produced by build job taken as input
+          required: true
+          default: dist
+          type: string
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: download artifact
+        uses: actions/download@v3
+        with:
+          name: ${{ inputs.artifact-name }}
+      - name: list the artifact
+        run: ls
       - name: deploy stage
         run: echo "using deploy file in execution workflow ....."
